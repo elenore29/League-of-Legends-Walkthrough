@@ -15,7 +15,14 @@ window.lol = {
           defense: element.info.defense,
           magic: element.info.magic,
           id: element.id,
-          difficulty: element.info.difficulty
+          difficulty: element.info.difficulty,
+          hp: element.stats.hp, 
+          mp: element.stats.mp,
+          armor: element.stats.armor,
+          crit: element.stats.crit,
+          attackdamage: element.stats.attackdamage,
+          movespeed: element.stats.movespeed,
+          title: element.title
         }
         if (!element.tags[1]) {
           champsInfo.secondaryRol = "";
@@ -95,11 +102,11 @@ window.lol = {
     return filteringName;
   },
 
-  toModal: (data, champSelect) => {
+  toModal: (newArrayChamp, champSelect) => {
     let champ = {};
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        const element = data[key];
+    for (const key in newArrayChamp) {
+      if (newArrayChamp.hasOwnProperty(key)) {
+        const element = newArrayChamp[key];
         if (element.id === champSelect) {
           champ = element;
           return element;

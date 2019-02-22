@@ -208,6 +208,7 @@ const selectRol = () => {
 const url = './data/lol/lol.json';
 fetch(url)
 .then(resp => resp.json())
+
 .then(json => json.data)
 .then(data => { 
   lolData =  window.lol.showData(data)

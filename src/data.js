@@ -34,6 +34,7 @@ window.lol = {
   //Aquí inicia la función para ordenar por ataque descendente
   sorterByAttackDesc: (newArrayChamp) => {
     const attackSorterDesc = newArrayChamp.sort((a, b) => {
+      //-1*order Para que una sola funcion ordene de forma ascendente y descendente
       if (b.attack > a.attack) {
         return 1;
       }

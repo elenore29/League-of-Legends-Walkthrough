@@ -151,7 +151,7 @@ back.addEventListener('click', () => {
   start.classList.remove('hide');
 });
 
-//Función para llamar a la función de reduce
+// Función para llamar a la función de reduce
 
 funFacts.addEventListener('click', ()=> {
   const newArrayChamp = window.lol.showData(lolData);

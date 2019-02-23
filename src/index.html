@@ -21,8 +21,6 @@
         <br>League of Legends champions
       </h2>
     </article>
-    <!-- <input id="user-name" type="text" placeholder="Username">
-    <input id="user-password" type="text" placeholder="Password"> -->
 
     <button class="start" id="start-button">Log In</button>
   </section>
@@ -42,6 +40,8 @@
       <!-- Contenido del modal -->
       <div class="modal-content">
         <span class="close" id="close-fun">x</span>
+        <canvas class="my-chart" width="400" height="400"></canvas>
+
         <div id="printModal">
 
         </div>
@@ -108,8 +108,10 @@
   </section>
 
   <!-- <script src="./data/lol/lol.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"> </script>
   <script src="data.js"></script>
   <script src="main.js"></script>
+  <script src="graphics.js"></script>
 </body>
 
 </html>

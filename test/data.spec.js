@@ -696,47 +696,37 @@ describe('filterByRol', () => {
   });
 });
 
-// Test de la función para ordenar por ataque de manera descendente
-describe('sorterByAttackDesc', () => {
+// Test de la función para ordenar por ataque de manera descendente y ascendente
+describe('sorterByAttack', () => {
   it('is a function', () => {
-    expect(typeof window.lol.sorterByAttackDesc).toBe('function');
-  });
-  it('Should return the object Bard if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackDesc(newArrayInfo, 'attack')[9].name).toEqual('Bard');
+    expect(typeof window.lol.sorterByAttack).toBe('function');
   });
   it('Should return the object Ashe if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackDesc(newArrayInfo, 'attack')[5].name).toEqual('Ashe');
+    expect(window.lol.sorterByAttack(newArrayInfo, -1, 'attack')[5].name).toEqual('Ashe');
   });
   it('Should return the object Caitlyn if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackDesc(newArrayInfo, 'attack')[4].name).toEqual('Caitlyn');
+    expect(window.lol.sorterByAttack(newArrayInfo, -1, 'attack')[4].name).toEqual('Caitlyn');
   });
   it('Should return the object Xerath if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackDesc(newArrayInfo, 'attack')[12].name).toEqual('Xerath');
+    expect(window.lol.sorterByAttack(newArrayInfo, -1, 'attack')[12].name).toEqual('Xerath');
   });
   it('Should return the object Jhin if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackDesc(newArrayInfo, 'attack')[1].name).toEqual('Jhin');
-  });
-});
-
-// Test de la función para ordenar por ataque de manera ascendente
-describe('sorterByAttackUpw', () => {
-  it('is a function', () => {
-    expect(typeof window.lol.sorterByAttackUpw).toBe('function');
+    expect(window.lol.sorterByAttack(newArrayInfo, -1, 'attack')[2].name).toEqual('Jhin');
   });
   it('Should return the object Bard if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackUpw(newArrayInfo, 'attack')[3].name).toEqual('Bard');
+    expect(window.lol.sorterByAttack(newArrayInfo, 1, 'attack')[3].name).toEqual('Bard');
   });
   it('Should return the object Ashe if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackUpw(newArrayInfo, 'attack')[7].name).toEqual('Ashe');
+    expect(window.lol.sorterByAttack(newArrayInfo, 1, 'attack')[7].name).toEqual('Ashe');
   });
   it('Should return the object Caitlyn if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackUpw(newArrayInfo, 'attack')[8].name).toEqual('Caitlyn');
+    expect(window.lol.sorterByAttack(newArrayInfo, 1, 'attack')[8].name).toEqual('Caitlyn');
   });
   it('Should return the object Xerath if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackUpw(newArrayInfo, 'attack')[0].name).toEqual('Xerath');
+    expect(window.lol.sorterByAttack(newArrayInfo, 1, 'attack')[0].name).toEqual('Xerath');
   });
   it('Should return the object Akali if we select sort by Attack', () => {
-    expect(window.lol.sorterByAttackUpw(newArrayInfo, 'attack')[4].name).toEqual('Akali');
+    expect(window.lol.sorterByAttack(newArrayInfo, 1, 'attack')[4].name).toEqual('Akali');
   });
 });
 
@@ -748,8 +738,8 @@ describe('sorterByMagic', () => {
   it('Should return the object Bard if we select sort by Magic', () => {
     expect(window.lol.sorterByMagic(newArrayInfo, 'magic')[7].name).toEqual('Bard');
   });
-  it('Should return the object Fiora if we select sort by Magic', () => {
-    expect(window.lol.sorterByMagic(newArrayInfo, 'magic')[11].name).toEqual('Fiora');
+  it('Should return the object Ashe if we select sort by Magic', () => {
+    expect(window.lol.sorterByMagic(newArrayInfo, 'magic')[11].name).toEqual('Ashe');
   });
   it('Should return the object Jhin if we select sort by Magic', () => {
     expect(window.lol.sorterByMagic(newArrayInfo, 'magic')[5].name).toEqual('Jhin');

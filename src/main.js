@@ -13,6 +13,7 @@ const attackUpw = document.getElementById('attack-upw');
 const magic = document.getElementById('magic');
 const defense = document.getElementById('defense');
 const back = document.getElementById('back');
+
 //Boton para el modal de curiosidades
 const funFacts = document.getElementById('fun-facts');
 const closeFunFacts = document.getElementById('close-fun');
@@ -20,6 +21,20 @@ const closeModal = document.getElementById('close-modal-fun');
 
 //Input para buscar por nombre
 let search = document.getElementById('search');
+
+//Graficas
+const lolChart = document.getElementsByClassName('my-char');
+
+// //Esta función es para seleccionar el rol por el cual se va a filtrar
+const selectRol = () => {
+  for (let i = 0; i < rol.length; i++) {
+    rol[i].addEventListener("click", () => {
+      let rolId = rol[i].id;
+      const arrayFiltered = window.lol.filterByRol(lolData, rolId);
+      printData(arrayFiltered);
+    })
+  }
+};
 
 //Funcion para agregar el evento key up al input para filtrar por nombre
 search.addEventListener('keyup', () => {
@@ -53,8 +68,8 @@ const printData = (newArrayInfo) => {
 //se abra el modal, obtiene del id del campeón
   for (let i = 0; i < champion.length; i++) {
     champion[i].addEventListener("click", () => {
-      let champElegido = champion[i].id;
-      const champ = window.lol.toModal(lolData, champElegido);
+      let champSelected = champion[i].id;
+      const champ = window.lol.toModal(lolData, champSelected);
       printModal(champ);
       modalChamp.classList.remove('hide');
     })
@@ -67,6 +82,7 @@ const printModal = (champ) => {
   <div class="background-modal" style="background-image:url(${champ.splash})">
   <h2>${champ.primaryRol}</h2>
   <h2>${champ.secondaryRol} </h2>
+  //graficas
   <p class="champion-stats">Attack: ${champ.attack}</p>
   <p class="champion-stats">Defense: ${champ.defense}</p>
   <p class="champion-stats">Magic: ${champ.magic}</p>
@@ -91,26 +107,15 @@ window.addEventListener('click', () => {
   }
 });
 
-// //Esta función es para seleccionar el rol por el cual se va a filtrar
-const selectRol = () => {
-  for (let i = 0; i < rol.length; i++) {
-    rol[i].addEventListener("click", () => {
-      let rolId = rol[i].id;
-      const arrayFiltered = window.lol.filterByRol(lolData, rolId);
-      printData(arrayFiltered);
-    })
-  }
-};
-
 //Funciones con las que se ordena de manera Descendente
 attackDesc.addEventListener('click', () => {
-  const attackSortDesc = window.lol.sorterByAttackDesc(lolData);
+  const attackSortDesc = window.lol.sorterByAttack(lolData, -1);
   printData(attackSortDesc);
 });
 
 //Funciones con las que se ordena de manera Ascendente
 attackUpw.addEventListener('click', () => {
-  const attackSortUpw = window.lol.sorterByAttackUpw(lolData);
+  const attackSortUpw = window.lol.sorterByAttack(lolData, 1);
   printData(attackSortUpw);
 });
 
@@ -148,17 +153,17 @@ window.addEventListener('click', () => {
   }
 });
 
-//Fetch para traer la data del archivo lol.json
 // //Variable para extraer la data
 let lolData = [];
+//Fetch para traer la data del archivo lol.json
 const url = './data/lol/lol.json';
 fetch(url)
 .then(response => response.json())
 
 .then(json => json.data)
 .then(data => { 
-  lolData =  window.lol.showData(data)
-  return lolData
+  lolData =  window.lol.showData(data);
+  return lolData;
 })
 
 .then(toPrint => printData(toPrint))

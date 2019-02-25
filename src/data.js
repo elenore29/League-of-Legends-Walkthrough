@@ -1,5 +1,5 @@
 window.lol = {
-  //Funcion que recorre un objeto que contiene 7 indicadores y se convierte en un arreglo
+  //Funcion que recorre un objeto que contiene los indicadores y se convierte en un arreglo
   showData: (lolData) => {
     let newArrayInfo = [];
     let champsInfo = {};
@@ -22,7 +22,8 @@ window.lol = {
           crit: element.stats.crit,
           attackdamage: element.stats.attackdamage,
           movespeed: element.stats.movespeed,
-          title: element.title
+          title: element.title,
+          graphic: [element.info.attack, element.info.defense, element.info.magic, element.info.difficulty],
         }
         if (!element.tags[1]) {
           champsInfo.secondaryRol = "";

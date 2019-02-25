@@ -22,15 +22,13 @@ const closeModal = document.getElementById('close-modal-fun');
 //Input para buscar por nombre
 let search = document.getElementById('search');
 
-//Graficas
-const lolChart = document.getElementsByClassName('my-char');
-
 // //Esta función es para seleccionar el rol por el cual se va a filtrar
 const selectRol = () => {
   for (let i = 0; i < rol.length; i++) {
     rol[i].addEventListener("click", () => {
       let rolId = rol[i].id;
-      const arrayFiltered = window.lol.filterByRol(lolData, rolId);
+      const newData = JSON.parse(localStorage.getItem('lol'));
+      const arrayFiltered = window.lol.filterByRol(newData, rolId);
       printData(arrayFiltered);
     })
   }
@@ -39,9 +37,10 @@ const selectRol = () => {
 //Funcion para agregar el evento key up al input para filtrar por nombre
 search.addEventListener('keyup', () => {
   let name2 = search.value;
-  let filtered = window.lol.filterByName(lolData, name2);
+  const newData = JSON.parse(localStorage.getItem('lol'));
+  let filtered = window.lol.filterByName(newData, name2);
   if (name2 == "") {
-    printData(lolData);
+    printData(newData);
   } else {
     printData(filtered);
   }
@@ -57,9 +56,9 @@ startButton.addEventListener('click', () => {
 const champion = document.getElementsByClassName('champion');
 
 // //Función para imprimir la data en el HTML
-const printData = (newArrayInfo) => {
+const printData = (newData) => {
   cardSummary.innerHTML = " ";
-  newArrayInfo.forEach(champ => {
+  newData.forEach(champ => {
     let result = `<div id='${champ.name}' class="champion"> <img src="${champ.splash}">
     <h3> ${champ.name} </h3> <div class="tags"> <p> ${champ.primaryRol} </p> <p> ${champ.secondaryRol} </p> </div></div>`;
     cardSummary.insertAdjacentHTML("beforeend", result);
@@ -69,9 +68,14 @@ const printData = (newArrayInfo) => {
   for (let i = 0; i < champion.length; i++) {
     champion[i].addEventListener("click", () => {
       let champSelected = champion[i].id;
-      const champ = window.lol.toModal(lolData, champSelected);
+      const newData = JSON.parse(localStorage.getItem('lol'));
+      const champ = window.lol.toModal(newData, champSelected);
       printModal(champ);
       modalChamp.classList.remove('hide');
+      let champGraphic = champ.graphic;
+      const etiquetas = ['Attack', 'Defense', 'Magic', 'Difficulty', 'Crit'];
+      let lolChart = document.getElementById('charts').getContext('2d');
+      window.graphic.myChart(lolChart, etiquetas, champGraphic);
     })
   }
 };
@@ -82,17 +86,7 @@ const printModal = (champ) => {
   <div class="background-modal" style="background-image:url(${champ.splash})">
   <h2>${champ.primaryRol}</h2>
   <h2>${champ.secondaryRol} </h2>
-  //graficas
-  <p class="champion-stats">Attack: ${champ.attack}</p>
-  <p class="champion-stats">Defense: ${champ.defense}</p>
-  <p class="champion-stats">Magic: ${champ.magic}</p>
-  <p class="champion-stats">Difficulty: ${champ.difficulty}</p>
-  <p class="champion-stats">HP: ${champ.hp}</p>
-  <p class="champion-stats">MP: ${champ.mp}</p>
-  <p class="champion-stats">Armor: ${champ.armor}</p>
-  <p class="champion-stats">Crit: ${champ.crit}</p>
-  <p class="champion-stats">Attack Damage: ${champ.attackdamage}</p>
-  <p class="champion-stats">Move Speed: ${champ.movespeed}</p>
+  <div class="graphic"> <canvas id="charts" width="400" height="400"></canvas> </div>
   </div>`;
 };
 
@@ -109,23 +103,27 @@ window.addEventListener('click', () => {
 
 //Funciones con las que se ordena de manera Descendente
 attackDesc.addEventListener('click', () => {
-  const attackSortDesc = window.lol.sorterByAttack(lolData, -1);
+  const newData = JSON.parse(localStorage.getItem('lol'));
+  const attackSortDesc = window.lol.sorterByAttack(newData, -1);
   printData(attackSortDesc);
 });
 
 //Funciones con las que se ordena de manera Ascendente
 attackUpw.addEventListener('click', () => {
-  const attackSortUpw = window.lol.sorterByAttack(lolData, 1);
+  const newData = JSON.parse(localStorage.getItem('lol'));
+  const attackSortUpw = window.lol.sorterByAttack(newData, 1);
   printData(attackSortUpw);
 });
 
 magic.addEventListener('click', () => {
-  const magicSort = window.lol.sorterByMagic(lolData);
+  const newData = JSON.parse(localStorage.getItem('lol'));
+  const magicSort = window.lol.sorterByMagic(newData);
   printData(magicSort);
 });
 
 defense.addEventListener('click', () => {
-  const defenseSort = window.lol.sorterByDefense(lolData);
+  const newData = JSON.parse(localStorage.getItem('lol'));
+  const defenseSort = window.lol.sorterByDefense(newData);
   printData(defenseSort);
 });
 
@@ -136,9 +134,10 @@ back.addEventListener('click', () => {
 
 //Función para llamar a la función de reduce
 funFacts.addEventListener('click', () => {
-  const reduce = window.lol.toReduce(lolData);
+  const newData = JSON.parse(localStorage.getItem('lol'));
+  const reduce = window.lol.toReduce(newData);
   modalFun.classList.remove('hide');
-  let average = reduce / lolData.length;
+  let average = reduce / newData.length;
   document.getElementById('average').innerHTML = average;
 });
 
@@ -154,18 +153,20 @@ window.addEventListener('click', () => {
 });
 
 // //Variable para extraer la data
-let lolData = [];
 //Fetch para traer la data del archivo lol.json
 const url = './data/lol/lol.json';
 fetch(url)
 .then(response => response.json())
 
-.then(json => json.data)
-.then(data => { 
-  lolData =  window.lol.showData(data);
-  return lolData;
+.then(json => {
+const lolData = json.data;
+const dataLol= window.lol.showData(lolData);
+localStorage.setItem('lol',JSON.stringify(dataLol));
+printData(dataLol);
 })
-
-.then(toPrint => printData(toPrint))
 .then(printByRol => selectRol(printByRol))
 .catch(err => (err))
+
+
+
+

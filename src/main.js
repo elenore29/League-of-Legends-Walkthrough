@@ -73,7 +73,7 @@ const printData = (newData) => {
       printModal(champ);
       modalChamp.classList.remove('hide');
       let champGraphic = champ.graphic;
-      const etiquetas = ['Attack', 'Defense', 'Magic', 'Difficulty', 'Crit'];
+      const etiquetas = ['Attack', 'Defense', 'Magic', 'Difficulty'];
       let lolChart = document.getElementById('charts').getContext('2d');
       window.graphic.myChart(lolChart, etiquetas, champGraphic);
     })

@@ -17,6 +17,7 @@ const back = document.getElementById('back');
 //Boton para el modal de curiosidades
 const funFacts = document.getElementById('fun-facts');
 const closeFunFacts = document.getElementById('close-fun');
+
 const closeModal = document.getElementById('close-modal-fun');
 
 //Input para buscar por nombre
@@ -45,18 +46,20 @@ search.addEventListener('keyup', () => {
     printData(filtered);
   }
 });
-
 //Evento del boton Comenzar
 startButton.addEventListener('click', () => {
   start.classList.add('hide');
   championList.classList.remove('hide');
+  const newArrayChamp = window.lol.showData(lolData);
+  printData(newArrayChamp);
 });
 
-// //Esta variable forma parte de la función de imprimir
+//Esta variable es para seleccionar el campeón que queremos visualizar
 const champion = document.getElementsByClassName('champion');
 
 // //Función para imprimir la data en el HTML
 const printData = (newData) => {
+
   cardSummary.innerHTML = " ";
   newData.forEach(champ => {
     let result = `<div id='${champ.name}' class="champion"> <img src="${champ.splash}">
@@ -65,6 +68,7 @@ const printData = (newData) => {
   });
 //el for asigna evento click a las "tarjetas" de personajes enlistadas para que al dar click
 //se abra el modal, obtiene del id del campeón
+
   for (let i = 0; i < champion.length; i++) {
     champion[i].addEventListener("click", () => {
       let champSelected = champion[i].id;
@@ -166,7 +170,3 @@ printData(dataLol);
 })
 .then(printByRol => selectRol(printByRol))
 .catch(err => (err))
-
-
-
-

@@ -50,8 +50,6 @@ search.addEventListener('keyup', () => {
 startButton.addEventListener('click', () => {
   start.classList.add('hide');
   championList.classList.remove('hide');
-  const newArrayChamp = window.lol.showData(lolData);
-  printData(newArrayChamp);
 });
 
 //Esta variable es para seleccionar el campeón que queremos visualizar

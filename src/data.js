@@ -1,5 +1,5 @@
 window.lol = {
-  //Funcion que recorre un objeto que contiene 7 indicadores y se convierte en un arreglo
+  //Funcion que recorre un objeto que contiene los indicadores y se convierte en un arreglo
   showData: (lolData) => {
     let newArrayInfo = [];
     let champsInfo = {};
@@ -15,7 +15,15 @@ window.lol = {
           defense: element.info.defense,
           magic: element.info.magic,
           id: element.id,
-          difficulty: element.info.difficulty
+          difficulty: element.info.difficulty,
+          hp: element.stats.hp, 
+          mp: element.stats.mp,
+          armor: element.stats.armor,
+          crit: element.stats.crit,
+          attackdamage: element.stats.attackdamage,
+          movespeed: element.stats.movespeed,
+          title: element.title,
+          graphic: [element.info.attack, element.info.defense, element.info.magic, element.info.difficulty],
         }
         if (!element.tags[1]) {
           champsInfo.secondaryRol = "";
@@ -32,33 +40,19 @@ window.lol = {
   },
 
   //Aquí inicia la función para ordenar por ataque descendente
-  sorterByAttackDesc: (newArrayChamp) => {
-    const attackSorterDesc = newArrayChamp.sort((a, b) => {
-      if (b.attack > a.attack) {
-        return 1;
-      }
-      if (b.attack < a.attack) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
-    return attackSorterDesc;
-  },
-
-  //Aquí inicia la función para ordenar por ataque ascendente
-  sorterByAttackUpw: (newArrayChamp) => {
-    const attackSorterUpw = newArrayChamp.sort((a, b) => {
+  sorterByAttack: (newArrayChamp, order) => {
+    const attackSorter = newArrayChamp.sort((a, b) => {
+      //-1*order Para que una sola funcion ordene de forma ascendente y descendente
       if (a.attack > b.attack) {
-        return 1;
+        return 1*order;
       }
       if (a.attack < b.attack) {
-        return -1;
+        return -1*order;
       } else {
         return 0;
       }
     });
-    return attackSorterUpw;
+    return attackSorter;
   },
 
   sorterByMagic: (newArrayChamp) => {
@@ -94,11 +88,11 @@ window.lol = {
     return filteringName;
   },
 
-  toModal: (data, champSelect) => {
+  toModal: (newArrayChamp, champSelect) => {
     let champ = {};
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        const element = data[key];
+    for (const key in newArrayChamp) {
+      if (newArrayChamp.hasOwnProperty(key)) {
+        const element = newArrayChamp[key];
         if (element.id === champSelect) {
           champ = element;
           return element;

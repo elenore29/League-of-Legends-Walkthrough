@@ -344,6 +344,10 @@ body {
     padding-right: 0.2em;
     padding-left: 0.2em;
   }
+
+  .graphic {
+    width: 70%;
+  }
 }
 
 @media screen and (min-width:992px) {
